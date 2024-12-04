@@ -3,10 +3,12 @@ import { MOUSE, TOUCH } from 'three'
 
 export const InfiniteGrid: React.FC = () => {
   const CELL_SIZE = 100000 // > 65535 = Max size for uint16
+  const BORDER_COLOR = 0x888888
+
   return (
     <>
       <gridHelper
-        args={[CELL_SIZE, CELL_SIZE, 0x888888, 0x888888]}
+        args={[CELL_SIZE, CELL_SIZE, BORDER_COLOR, BORDER_COLOR]}
         rotation={[-Math.PI / 2, 0, 0]}
         castShadow={false}
       />
