@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { InfiniteGrid } from './components/InfiniteGrid'
+import { InfiniteGrid } from './components/InfiniteGrid.tsx'
 
 const App = () => {
   return (
