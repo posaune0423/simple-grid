@@ -6,11 +6,40 @@
     "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
   },
   "compilerOptions": {
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "deno.window"],
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "jsxImportSourceTypes": "@types/react"
+    "jsxImportSourceTypes": "@types/react",
+    "strict": true
   },
+  "lint": {
+    "files": {
+      "include": ["src"],
+      "exclude": ["node_modules"]
+    },
+    "rules": {
+      "tags": ["recommended"],
+      "exclude": [
+        "no-unused-vars",
+        "no-explicit-any",
+        "require-await",
+        "ban-ts-comment"
+      ]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": ["src", "deno.jsonc"],
+      "exclude": ["node_modules"]
+    },
+    "options": {
+      "useTabs": false,
+      "lineWidth": 120,
+      "indentWidth": 2,
+      "singleQuote": true
+    }
+  },
+  "nodeModulesDir": "auto",
   "imports": {
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
     "@react-three/drei": "npm:@react-three/drei@^9.119.0",
@@ -25,6 +54,5 @@
     "tailwindcss": "npm:tailwindcss@^4.0.0-beta.4",
     "three": "npm:three@^0.171.0",
     "vite": "npm:vite@^6.0.1"
-  },
-  "nodeModulesDir": "auto"
+  }
 }
