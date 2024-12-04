@@ -6,10 +6,11 @@
     "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
   },
   "compilerOptions": {
-    "lib": ["ES2020", "DOM", "DOM.Iterable", "deno.window"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "deno.window", "deno.ns"],
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "jsxImportSourceTypes": "@types/react",
+    "types": ["@types/react", "@types/react-dom", "@types/three"],
     "strict": true
   },
   "lint": {
@@ -29,7 +30,7 @@
     "include": ["src", "deno.jsonc"],
     "exclude": ["node_modules"],
     "useTabs": false,
-    "lineWidth": 120,
+    "lineWidth": 100,
     "indentWidth": 2,
     "singleQuote": true
   },
