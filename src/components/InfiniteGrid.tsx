@@ -1,5 +1,5 @@
-import { OrbitControls } from "@react-three/drei";
-import { Euler, MOUSE, TOUCH } from "three";
+import { OrbitControls } from '@react-three/drei';
+import { Euler, MOUSE, TOUCH } from 'three';
 
 export const InfiniteGrid: React.FC = () => {
   const CELL_SIZE = 100000; // > 65535 = Max size for uint16
