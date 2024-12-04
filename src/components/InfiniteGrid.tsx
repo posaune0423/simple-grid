@@ -9,7 +9,7 @@ const CELL_SIZE = 100000;
 const BORDER_COLOR = 0x888888;
 const rotation = new Euler(-Math.PI / 2, 0, 0);
 
-// 座標を文字列キーに変換する関数
+// function to convert coordinates to a key
 const coordToKey = (x: number, y: number) => `${x}-${y}`;
 
 export const InfiniteGrid: React.FC = () => {
@@ -26,7 +26,7 @@ export const InfiniteGrid: React.FC = () => {
     if (pointerDownPos.current) {
       const dx = Math.abs(e.clientX - pointerDownPos.current.x);
       const dy = Math.abs(e.clientY - pointerDownPos.current.y);
-      // マウスが一定距離以上動いていた場合はパン操作とみなす
+      // If the mouse has moved a certain distance, consider it a pan operation
       isPanning.current = dx > 5 || dy > 5;
       setTimeout(() => {
         isPanning.current = false;
@@ -38,16 +38,19 @@ export const InfiniteGrid: React.FC = () => {
   const handleClick = useCallback((event: ThreeEvent<MouseEvent>) => {
     if (isPanning.current) return;
 
+    // Stop event propagation
+    event.stopPropagation();
+
     if (event.intersections.length > 0) {
-      const closestIntersection = event.intersections
-        .sort((a, b) => a.distance - b.distance)[0];
+      // Calculate the average point of all intersections
+      const avgPoint = event.intersections.reduce((acc, intersection) => {
+        acc.x += intersection.point.x;
+        acc.y += intersection.point.y;
+        return acc;
+      }, new Vector3(0, 0, 0)).divideScalar(event.intersections.length);
 
-      const point = closestIntersection.point;
-      console.log('point', point);
-
-      // 正負で条件分岐して座標を計算
-      const x = point.x >= 0 ? Math.floor(point.x) + 0.5 : Math.ceil(point.x) - 0.5;
-      const y = point.y >= 0 ? Math.floor(point.y) + 0.5 : Math.ceil(point.y) - 0.5;
+      const x = avgPoint.x >= 0 ? Math.floor(avgPoint.x) + 0.5 : Math.ceil(avgPoint.x) - 0.5;
+      const y = avgPoint.y >= 0 ? Math.floor(avgPoint.y) + 0.5 : Math.ceil(avgPoint.y) - 0.5;
 
       const key = coordToKey(x, y);
 
@@ -68,7 +71,7 @@ export const InfiniteGrid: React.FC = () => {
       onPointerUp={handlePointerUp}
     >
       <gridHelper
-        args={[CELL_SIZE, CELL_SIZE]}
+        args={[CELL_SIZE, CELL_SIZE, BORDER_COLOR, BORDER_COLOR]}
         rotation={rotation}
         castShadow={false}
         onClick={handleClick}
